@@ -1,6 +1,9 @@
 # react-native-mone
 
-React Native image filters
+React Native image filters and effects library.
+
+## Warning ⚠️
+This package is still in development and not ready for production use.
 
 ## Installation
 
@@ -11,11 +14,27 @@ npm install react-native-mone
 ## Usage
 
 ```js
-import { MoneView } from "react-native-mone";
+import { MoneView, MoneFilters } from "react-native-mone";
 
 // ...
 
-<MoneView color="tomato" />
+const source = {
+  uri: "https://i.imgur.com/0Z0Z0Z0.jpg",
+  width: 100,
+  height: 100,
+};
+
+// ...
+
+
+
+<MoneView
+  source={source}
+  width={100}
+  height={100}
+  filter={MoneFilters.sepia}
+
+/>
 ```
 
 ## Contributing
@@ -28,4 +47,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Made with ❤️ by [GennadySX](https://github.com/GennadySX)

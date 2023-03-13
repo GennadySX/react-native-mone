@@ -1,22 +1,36 @@
+/*
+ * @author GennadySX
+ * @created at 2023
+ **/
+
 package com.mone;
+
+import androidx.annotation.NonNull;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class MonePackage implements ReactPackage {
+public class MonePackage implements ReactPackage
+{
+  @NonNull
   @Override
-  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-    return Collections.emptyList();
+  public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactApplicationContext) {
+    List<NativeModule> modules = new ArrayList<>();
+    modules.add(new MoneFilterModule(reactContext));
+    return modules;
   }
 
+  @NonNull
   @Override
-  public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-    return Arrays.<ViewManager>asList(new MoneViewManager());
+  public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactApplicationContext) {
+    return Arrays.<ViewManager>asList(
+      new MoneViewManager(reactApplicationContext)
+    );
   }
 }
