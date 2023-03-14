@@ -8,8 +8,11 @@ package com.mone.views;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -35,10 +38,22 @@ public class ResizeImageView extends FrameLayout {
 
         int width = args.getInt("width");
         int height = args.getInt("height");
+        int borderRadius = args.getInt("borderRadius");
 
         myImageView = new ImageView(context);
         this.onChangeParams(url, width, height, ImageFilters.valueOf(filterString));
-        addView(myImageView);
+        //set border radius
+        myImageView.setClipToOutline(true);
+        myImageView.setOutlineProvider(new ViewOutlineProvider() {
+          @Override
+          public void getOutline(View view, Outline outline) {
+            outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), borderRadius);
+          }
+        });
+
+
+
+      addView(myImageView);
     }
 
 

@@ -37,6 +37,9 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
   // View height size parameter
   private int propHeight;
 
+  // View border radius size parameter
+  private int borderRadius = 0;
+
   // React application context as a member variable for accessing React Native modules
   private final ReactApplicationContext context;
 
@@ -99,7 +102,7 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
    * 0 - width
    * 1 - height
    */
-  @ReactPropGroup(names = {"width", "height"}, customType = "Style")
+  @ReactPropGroup(names = {"width", "height", "borderRadius"}, customType = "Style")
   public void setStyle(FrameLayout view, int index, Integer value) {
     if (index == 0) {
       propWidth = value;
@@ -107,6 +110,10 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
 
     if (index == 1) {
       propHeight = value;
+    }
+
+    if (index == 2) {
+      borderRadius = value;
     }
   }
 
@@ -131,6 +138,8 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
     mArguments.putInt("width", width);
     mArguments.putInt("height", height);
     mArguments.putString("filter", filterString);
+    mArguments.putString("borderRadius", String.valueOf(borderRadius));
+
 
     ImageFilters filter = ImageFilters.valueOf(filterString);
 

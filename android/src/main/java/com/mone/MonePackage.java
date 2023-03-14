@@ -22,7 +22,7 @@ public class MonePackage implements ReactPackage
   @Override
   public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactApplicationContext) {
     List<NativeModule> modules = new ArrayList<>();
-    modules.add(new MoneFilterModule(reactContext));
+    modules.add(new MoneFilterModule(reactApplicationContext));
     return modules;
   }
 

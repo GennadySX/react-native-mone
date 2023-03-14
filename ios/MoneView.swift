@@ -6,12 +6,14 @@
 import Foundation
 import UIKit
 
+@available(iOS 10.0, *)
 class MoneView : UIView {
 
     var width: CGFloat = 0
     var height: CGFloat = 0
     var filter: FilterType = .off
     var source: String = ""
+    var borderRadius: CGFloat = 0
 
     let imageView = UIImageView()
 
@@ -34,7 +36,6 @@ class MoneView : UIView {
     }
 
 
-    @available(iOS 10.0, *)
     func setupImageView() {
         let size  = CGSize(width: width, height: height)
         let url = URL(string: source)
@@ -44,12 +45,16 @@ class MoneView : UIView {
 //       let resizedImage = image?.resizeImage(size: size )
         let resizedImage = image?.resizeImageSimple(size: size)
         imageView.image = resizedImage?.filter(filter: self.filter)
+        imageView.layer.cornerRadius = borderRadius
         self.frame = CGRect(x: 0, y: 0, width: width, height: height)
         addSubview(imageView)
     }
 
 
-    @available(iOS 10.0, *)
+    @objc func setStyle(_ style: NSDictionary) {
+        self.borderRadius = (style["borderRadius"] ?? 0) as! CGFloat
+    }
+
     @objc func setSource(_ source: NSDictionary) {
         let filterStr = source["filter"] as! String
         switch filterStr {
