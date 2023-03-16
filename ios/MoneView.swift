@@ -45,6 +45,7 @@ class MoneView : UIView {
 //       let resizedImage = image?.resizeImage(size: size )
         let resizedImage = image?.resizeImageSimple(size: size)
         imageView.image = resizedImage?.filter(filter: self.filter)
+        imageView.clipsToBounds = true;
         imageView.layer.cornerRadius = borderRadius
         self.frame = CGRect(x: 0, y: 0, width: width, height: height)
         addSubview(imageView)
@@ -76,8 +77,9 @@ class MoneView : UIView {
         self.source = (source["uri"] ?? "") as! String
         self.width = (source["width"] ?? 0) as! CGFloat
         self.height = (source["height"] ?? 0) as! CGFloat
+        self.borderRadius = (source["borderRadius"] ?? 0) as! CGFloat
 
-        print("filter: \(self.filter), source: \(self.source), width: \(self.width), height: \(self.height)")
+        print("filter: \(self.filter), source: \(self.source), width: \(self.width), height: \(self.height), borderRadius: \(self.borderRadius)")
 
         if(!self.source.isEmpty) {
             setupImageView()

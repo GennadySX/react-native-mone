@@ -20,31 +20,35 @@ class MoneFilter: NSObject, RCTBridgeModule {
         return "MoneFilter"
     }
 
-    @objc func filterImage(_ imageUri: NSString, _ filterType: NSString, _ callback: RCTResponseSenderBlock) {
-        let url = URL(string: String(imageUri))
-        let data = try? Data(contentsOf: url!)
-        let image = UIImage(data: data!)
-        var filteredImage: UIImage?
-        switch filterType {
-        case "sepia":
-            filteredImage = image?.filterSepia()
-        case "blur":
-            filteredImage = image?.filterBlur()
-        case "polaroid":
-            filteredImage = image?.filterPolaris()
-        case "grayscale":
-            filteredImage = image?.filterGrayScale()
-        default:
-            filteredImage = image
-        }
-        let base64String = filteredImage?.pngData()?.base64EncodedString(options: .lineLength64Characters)
-      callback([base64String ?? ""])
-    }
+    @objc
+    func filterImage(_ uri: String, filter: String, callback: @escaping RCTResponseSenderBlock) {
+       DispatchQueue.global(qos: .background).async {
+          let url = URL(string: String(uri))
+          let data = try? Data(contentsOf: url!)
+          let image = UIImage(data: data!)
+          var filteredImage: UIImage?
+          let filterLowerCase = filter.lowercased()
+          switch filterLowerCase {
+            case "sepia":
+              filteredImage = image?.filter(filter: .sepia)
+            case "blur":
+              filteredImage = image?.filter(filter: .blur)
+            case "grayscale":
+              filteredImage = image?.filter(filter: .grayscale)
 
+            case "sharpen":
+                 filteredImage = image?.filter(filter: .sharpen)
+            case "invert":
+                 filteredImage = image?.filter(filter: .blackAndWhite)
+            default:
+              filteredImage = image
+          }
 
-    @objc func getFilters(_ promise: RCTResponseSenderBlock, rejected: RCTPromiseRejectBlock) {
-        let filters = ["sepia", "blur", "polaroid"]
-        promise(filters)
-    }
+         let base64String = filteredImage?.pngData()?.base64EncodedString(options: .lineLength64Characters)
 
+         DispatchQueue.main.async {
+               callback([base64String ?? ""])
+             }
+         }
+     }
 }

@@ -12,6 +12,7 @@ import {
   UIManager,
   Image,
   ImageURISource,
+  ViewStyle,
 } from 'react-native';
 import MoneViewModule, {
   MODULE_NAME,
@@ -54,8 +55,9 @@ export const MoneView = (props: MoneViewProps) => {
     () => ({
       width: getPlatformRatios(fixedWidth),
       height: getPlatformRatios(fixedHeight),
+      borderRadius: getPlatformRatios(props?.style?.borderRadius || 0),
     }),
-    [fixedHeight, fixedWidth]
+    [fixedHeight, fixedWidth, props?.style?.borderRadius]
   );
 
   const source = useMemo(() => {
@@ -67,12 +69,22 @@ export const MoneView = (props: MoneViewProps) => {
       ...fixedSizes,
       uri,
       filter: props.filter,
+      borderRadius: getPlatformRatios(props?.style?.borderRadius || 0),
     };
-  }, [fixedSizes, props.filter, props.source]);
+  }, [fixedSizes, props.filter, props.source, props?.style?.borderRadius]);
 
   const isCrash = useMemo(() => {
     return !(source?.width && source?.height && source?.uri && source?.filter);
   }, [source?.filter, source?.height, source?.uri, source?.width]);
+
+  const style = useMemo<ViewStyle>(() => {
+    return isCustomSize
+      ? {
+          ...props.style,
+          ...fixedSizes,
+        }
+      : props.style;
+  }, [fixedSizes, isCustomSize, props.style]);
 
   useEffect(() => {
     if (IS_ANDROID) {
@@ -86,11 +98,5 @@ export const MoneView = (props: MoneViewProps) => {
     return null;
   }
 
-  return (
-    <MoneViewModule
-      ref={ref}
-      source={source}
-      style={[props.style, isCustomSize && fixedSizes]}
-    />
-  );
+  return <MoneViewModule ref={ref} source={source} style={style} />;
 };

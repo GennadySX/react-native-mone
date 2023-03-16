@@ -41,19 +41,9 @@ public class ResizeImageView extends FrameLayout {
         int borderRadius = args.getInt("borderRadius");
 
         myImageView = new ImageView(context);
-        this.onChangeParams(url, width, height, ImageFilters.valueOf(filterString));
-        //set border radius
-        myImageView.setClipToOutline(true);
-        myImageView.setOutlineProvider(new ViewOutlineProvider() {
-          @Override
-          public void getOutline(View view, Outline outline) {
-            outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), borderRadius);
-          }
-        });
+        this.onChangeParams(url, width, height, ImageFilters.valueOf(filterString), borderRadius);
 
-
-
-      addView(myImageView);
+        addView(myImageView);
     }
 
 
@@ -64,7 +54,7 @@ public class ResizeImageView extends FrameLayout {
      * @param height
      * @param filter
      */
-    public void onChangeParams(String uri, int width, int height, ImageFilters filter) {
+    public void onChangeParams(String uri, int width, int height, ImageFilters filter, Integer borderRadius) {
 
         Log.d("ResizeImageView", "onChangeParams: " + uri + " " + width + " " + height + " " + filter);
 
@@ -82,7 +72,17 @@ public class ResizeImageView extends FrameLayout {
                         myImageView.setImageBitmap(bitmap);
                     }
                 });
+
+        //set border radius
+        myImageView.setClipToOutline(true);
+        myImageView.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), borderRadius);
+            }
+        });
         myImageView.setLayoutParams(new LayoutParams(width, height));
+
     }
 
 

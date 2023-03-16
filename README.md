@@ -2,9 +2,6 @@
 
 React Native image filters and effects library.
 
-## Warning ⚠️
-This package is still in development and not ready for production use.
-
 ## Installation
 
 ```sh
@@ -33,9 +30,34 @@ const source = {
   width={100}
   height={100}
   filter={MoneFilters.sepia}
+  style={
+    borderRadius: 50
+  }
 
 />
 ```
+
+
+## Usage as Module
+
+```ts
+import { MoneFilters } from './MoneFilter';
+
+const imgUri: string = "..."
+const filter: MoneFilters = MoneFilters.grayscale
+
+const onSetFilter = () =>
+  ImageFilter.filterImage(
+    imgUri,
+    filter, //as enum from MoneFilters
+    (base64: string) => {
+      const imgBase64 = `data:image/png;base64,${res}`;
+      console.log('imgBase64:: -> ', imgBase64);
+    },
+  );
+
+```
+
 
 ## Contributing
 

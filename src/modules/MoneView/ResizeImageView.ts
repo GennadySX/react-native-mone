@@ -2,7 +2,7 @@
  * @author GennadySX
  * @created at 2023
  **/
-import { ImageStyle, requireNativeComponent, StyleProp } from 'react-native';
+import { requireNativeComponent, ViewStyle } from 'react-native';
 import { MoneFilters } from '../MoneFilter/MoneFilter';
 import React from 'react';
 
@@ -14,8 +14,9 @@ export type ResizeImageProps = {
     filter?: MoneFilters;
     width: number;
     height: number;
+    borderRadius?: number;
   };
-  style?: StyleProp<ImageStyle>;
+  style?: ViewStyle;
   ref?: React.RefObject<any>;
 };
 

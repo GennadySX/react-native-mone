@@ -130,7 +130,10 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
     String uri = source.getString("uri");
     int width = source.getInt("width");
     int height = source.getInt("height");
+    int borderRadius = source.getInt("borderRadius");
+
     String filterString = Objects.requireNonNull(source.getString("filter"));
+
 
     // Save arguments to use them later in createFragment method
     mArguments = new Bundle();
@@ -139,13 +142,15 @@ public class MoneViewManager extends ViewGroupManager<FrameLayout>  {
     mArguments.putInt("height", height);
     mArguments.putString("filter", filterString);
     mArguments.putString("borderRadius", String.valueOf(borderRadius));
+    mArguments.putInt("borderRadius", borderRadius);
+
 
 
     ImageFilters filter = ImageFilters.valueOf(filterString);
 
     // Call resize method if fragment is not null
     if (myFragment != null) {
-      myFragment.resizeImageView.onChangeParams(uri, width, height, filter);
+      myFragment.resizeImageView.onChangeParams(uri, width, height, filter, borderRadius);
     }
   }
 
